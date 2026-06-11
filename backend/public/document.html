@@ -123,11 +123,17 @@
   <!-- Tracking Script -->
   <script>
     (function() {
-      // 1. Generate or retrieve Session ID
-      let sessionId = localStorage.getItem('aero_tracker_session_id');
-      if (!sessionId) {
-        sessionId = 'sess_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
-        localStorage.setItem('aero_tracker_session_id', sessionId);
+      // 1. Generate or retrieve Session ID safely (handles file:// security restrictions)
+      let sessionId = null;
+      try {
+        sessionId = localStorage.getItem('aero_tracker_session_id');
+        if (!sessionId) {
+          sessionId = 'sess_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
+          localStorage.setItem('aero_tracker_session_id', sessionId);
+        }
+      } catch (e) {
+        // Fallback for strict browser local file security
+        sessionId = 'sess_temp_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
       }
 
       // 2. Determine backend API tracking URL
