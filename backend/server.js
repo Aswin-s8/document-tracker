@@ -10,13 +10,13 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { initDb, insertLog, getAllLogs, clearAllLogs } from './database.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Load environment variables
 dotenv.config();
 const parentEnvPath = path.resolve(__dirname, '..', '.env');
 dotenv.config({ path: parentEnvPath });
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
