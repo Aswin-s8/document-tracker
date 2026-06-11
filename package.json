@@ -1,0 +1,13 @@
+{
+  "name": "document-view-tracker",
+  "version": "1.0.0",
+  "description": "Proof-of-concept document view tracking system with Express backend and React dashboard",
+  "scripts": {
+    "setup": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "start": "concurrently \"npm start --prefix backend\" \"npm run build --prefix frontend && node backend/server.js\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
