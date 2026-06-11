@@ -131,8 +131,11 @@ app.post('/api/track', trackingLimiter, async (req, res) => {
     }
 
     // IP Extraction
-    let rawIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || req.ip;
-    if (rawIp === '::1' || rawIp === '::ffff:127.0.0.1') {
+    let rawIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || req.ip || '127.0.0.1';
+    if (rawIp.startsWith('::ffff:')) {
+      rawIp = rawIp.substring(7);
+    }
+    if (rawIp === '::1') {
       rawIp = '127.0.0.1';
     }
 
